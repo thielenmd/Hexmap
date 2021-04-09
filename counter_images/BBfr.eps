@@ -1,0 +1,589 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: (ImageMagick)
+%%Title: (BBfr.eps)
+%%CreationDate: (2018-07-28T23:59:34+00:00)
+%%BoundingBox: -0 -0 45 44
+%%HiResBoundingBox: 0 0 45 44
+%%DocumentData: Clean7Bit
+%%LanguageLevel: 1
+%%Pages: 1
+%%EndComments
+
+%%BeginDefaults
+%%EndDefaults
+
+%%BeginProlog
+%
+% Display a color image.  The image is displayed in color on
+% Postscript viewers or printers that support color, otherwise
+% it is displayed as grayscale.
+%
+/DirectClassPacket
+{
+  %
+  % Get a DirectClass packet.
+  %
+  % Parameters:
+  %   red.
+  %   green.
+  %   blue.
+  %   length: number of pixels minus one of this color (optional).
+  %
+  currentfile color_packet readhexstring pop pop
+  compression 0 eq
+  {
+    /number_pixels 3 def
+  }
+  {
+    currentfile byte readhexstring pop 0 get
+    /number_pixels exch 1 add 3 mul def
+  } ifelse
+  0 3 number_pixels 1 sub
+  {
+    pixels exch color_packet putinterval
+  } for
+  pixels 0 number_pixels getinterval
+} bind def
+
+/DirectClassImage
+{
+  %
+  % Display a DirectClass image.
+  %
+  systemdict /colorimage known
+  {
+    columns rows 8
+    [
+      columns 0 0
+      rows neg 0 rows
+    ]
+    { DirectClassPacket } false 3 colorimage
+  }
+  {
+    %
+    % No colorimage operator;  convert to grayscale.
+    %
+    columns rows 8
+    [
+      columns 0 0
+      rows neg 0 rows
+    ]
+    { GrayDirectClassPacket } image
+  } ifelse
+} bind def
+
+/GrayDirectClassPacket
+{
+  %
+  % Get a DirectClass packet;  convert to grayscale.
+  %
+  % Parameters:
+  %   red
+  %   green
+  %   blue
+  %   length: number of pixels minus one of this color (optional).
+  %
+  currentfile color_packet readhexstring pop pop
+  color_packet 0 get 0.299 mul
+  color_packet 1 get 0.587 mul add
+  color_packet 2 get 0.114 mul add
+  cvi
+  /gray_packet exch def
+  compression 0 eq
+  {
+    /number_pixels 1 def
+  }
+  {
+    currentfile byte readhexstring pop 0 get
+    /number_pixels exch 1 add def
+  } ifelse
+  0 1 number_pixels 1 sub
+  {
+    pixels exch gray_packet put
+  } for
+  pixels 0 number_pixels getinterval
+} bind def
+
+/GrayPseudoClassPacket
+{
+  %
+  % Get a PseudoClass packet;  convert to grayscale.
+  %
+  % Parameters:
+  %   index: index into the colormap.
+  %   length: number of pixels minus one of this color (optional).
+  %
+  currentfile byte readhexstring pop 0 get
+  /offset exch 3 mul def
+  /color_packet colormap offset 3 getinterval def
+  color_packet 0 get 0.299 mul
+  color_packet 1 get 0.587 mul add
+  color_packet 2 get 0.114 mul add
+  cvi
+  /gray_packet exch def
+  compression 0 eq
+  {
+    /number_pixels 1 def
+  }
+  {
+    currentfile byte readhexstring pop 0 get
+    /number_pixels exch 1 add def
+  } ifelse
+  0 1 number_pixels 1 sub
+  {
+    pixels exch gray_packet put
+  } for
+  pixels 0 number_pixels getinterval
+} bind def
+
+/PseudoClassPacket
+{
+  %
+  % Get a PseudoClass packet.
+  %
+  % Parameters:
+  %   index: index into the colormap.
+  %   length: number of pixels minus one of this color (optional).
+  %
+  currentfile byte readhexstring pop 0 get
+  /offset exch 3 mul def
+  /color_packet colormap offset 3 getinterval def
+  compression 0 eq
+  {
+    /number_pixels 3 def
+  }
+  {
+    currentfile byte readhexstring pop 0 get
+    /number_pixels exch 1 add 3 mul def
+  } ifelse
+  0 3 number_pixels 1 sub
+  {
+    pixels exch color_packet putinterval
+  } for
+  pixels 0 number_pixels getinterval
+} bind def
+
+/PseudoClassImage
+{
+  %
+  % Display a PseudoClass image.
+  %
+  % Parameters:
+  %   class: 0-PseudoClass or 1-Grayscale.
+  %
+  currentfile buffer readline pop
+  token pop /class exch def pop
+  class 0 gt
+  {
+    currentfile buffer readline pop
+    token pop /depth exch def pop
+    /grays columns 8 add depth sub depth mul 8 idiv string def
+    columns rows depth
+    [
+      columns 0 0
+      rows neg 0 rows
+    ]
+    { currentfile grays readhexstring pop } image
+  }
+  {
+    %
+    % Parameters:
+    %   colors: number of colors in the colormap.
+    %   colormap: red, green, blue color packets.
+    %
+    currentfile buffer readline pop
+    token pop /colors exch def pop
+    /colors colors 3 mul def
+    /colormap colors string def
+    currentfile colormap readhexstring pop pop
+    systemdict /colorimage known
+    {
+      columns rows 8
+      [
+        columns 0 0
+        rows neg 0 rows
+      ]
+      { PseudoClassPacket } false 3 colorimage
+    }
+    {
+      %
+      % No colorimage operator;  convert to grayscale.
+      %
+      columns rows 8
+      [
+        columns 0 0
+        rows neg 0 rows
+      ]
+      { GrayPseudoClassPacket } image
+    } ifelse
+  } ifelse
+} bind def
+
+/DisplayImage
+{
+  %
+  % Display a DirectClass or PseudoClass image.
+  %
+  % Parameters:
+  %   x & y translation.
+  %   x & y scale.
+  %   label pointsize.
+  %   image label.
+  %   image columns & rows.
+  %   class: 0-DirectClass or 1-PseudoClass.
+  %   compression: 0-none or 1-RunlengthEncoded.
+  %   hex color packets.
+  %
+  gsave
+  /buffer 512 string def
+  /byte 1 string def
+  /color_packet 3 string def
+  /pixels 768 string def
+
+  currentfile buffer readline pop
+  token pop /x exch def
+  token pop /y exch def pop
+  x y translate
+  currentfile buffer readline pop
+  token pop /x exch def
+  token pop /y exch def pop
+  currentfile buffer readline pop
+  token pop /pointsize exch def pop
+  x y scale
+  currentfile buffer readline pop
+  token pop /columns exch def
+  token pop /rows exch def pop
+  currentfile buffer readline pop
+  token pop /class exch def pop
+  currentfile buffer readline pop
+  token pop /compression exch def pop
+  class 0 gt { PseudoClassImage } { DirectClassImage } ifelse
+  grestore
+} bind def
+%%EndProlog
+%%Page:  1 1
+%%PageBoundingBox: 0 0 45 44
+userdict begin
+DisplayImage
+0 0
+45 44
+12
+45 44
+1
+0
+0
+256
+FFFFFF
+FFFFFF
+FFFFF7
+FFFFEF
+FFF7FF
+F7FFFF
+F7FFF7
+F7F7FF
+F7F7F7
+F7F7EF
+EFEFF7
+EFEFEF
+EFE7EF
+E7E7EF
+E7E7DE
+E7DEE7
+E7C6C6
+E7BDC6
+E7B5C6
+DEE7EF
+DEE7E7
+DEDEF7
+DEDEEF
+DEDEDE
+DED6DE
+DEC6C6
+DEBDC6
+DEB5C6
+DEB5BD
+DEADBD
+DE94A5
+D6DED6
+D6D6D6
+D6D6CE
+D6CED6
+D6CEC6
+D6ADBD
+D6ADB5
+D69CAD
+D694AD
+D68CAD
+D68CA5
+D684A5
+D6849C
+D67B9C
+D67B94
+D67394
+D6314A
+D62942
+D62939
+CECECE
+CE8CA5
+CE84A5
+CE849C
+CE8494
+CE7B9C
+CE7394
+CE6B8C
+CE5A84
+CE4A6B
+CE4263
+CE395A
+CE3152
+CE314A
+CE2942
+C6CECE
+C6CEC6
+C6CEBD
+C6C6DE
+C6C6C6
+C6C6BD
+C69C9C
+C6949C
+C67B9C
+C67B94
+C66B8C
+C66384
+C6527B
+C65273
+C64A73
+C64A6B
+C6426B
+C64263
+C6395A
+C63152
+BDC6BD
+BDBDEF
+BDBDE7
+BDBDDE
+BDBDBD
+BDB5BD
+BD9CA5
+BD7B94
+BD738C
+BD7384
+BD6B8C
+BD6384
+BD4A73
+BD4A6B
+BD3152
+B5B5BD
+B5B5B5
+B5B5AD
+B5ADB5
+B5ADA5
+B59C9C
+B59494
+B58C94
+B5315A
+ADB5B5
+ADADB5
+ADADA5
+ADA59C
+AD7B8C
+AD3163
+AD315A
+A5ADAD
+A5ADA5
+A5A5A5
+A5A59C
+A53963
+A53163
+9CA594
+9C9C9C
+9C8484
+9C6B73
+9C3963
+9C3163
+94949C
+949494
+94948C
+948C9C
+948C8C
+8C948C
+8C9484
+8C8C94
+8C8C8C
+8C848C
+8C3163
+848C84
+848484
+84847B
+84396B
+7B7B84
+7B7B7B
+7B5263
+7B316B
+7B296B
+737B73
+73737B
+737373
+73736B
+73296B
+6B735A
+6B6B73
+6B6B6B
+6B6B63
+6B637B
+6B396B
+6B316B
+6B3163
+636B5A
+636363
+63635A
+63525A
+63316B
+633163
+5A6B52
+5A5A63
+5A5A5A
+5A5A52
+5A5A4A
+5A3163
+525A5A
+525A52
+52525A
+525252
+52524A
+523963
+523163
+522163
+4A5252
+4A524A
+4A4A5A
+4A4A4A
+4A4A42
+4A4252
+4A4242
+4A3163
+424A42
+42424A
+424242
+424239
+423939
+394239
+39397B
+393942
+393931
+393139
+39295A
+39215A
+313939
+313131
+313129
+312963
+31215A
+312152
+292952
+292931
+292929
+292921
+292152
+292121
+212931
+212929
+212921
+212918
+212152
+212142
+212131
+212129
+212121
+212118
+211852
+211818
+18214A
+182121
+182118
+18185A
+18184A
+181842
+181818
+181810
+101039
+101018
+101010
+100810
+081021
+081010
+080831
+080821
+080810
+080800
+080018
+000821
+000818
+000808
+000800
+000031
+000029
+000021
+000018
+000010
+000008
+000000
+000000
+3131313131313131313131313131313131313131313131313131313131313131313131313131
+3131313131313131313131313131313131313131313131313131313131313131313131313131
+313131313131313131313131313131313131313173929E92313163AC8A31313131929E407EAC
+92929E9E6331313131313131313131313131313131313131312FCCFFFFFFFFF07263F1EE3131
+318AF1F040CCFFFFF1FFFFEF6331313131313131313131313131313131313131ACFFFFC4ACF1
+FFB42FE4FF722F31E4FFDF31DFFFDA3131FFFF9331313B373B31313131313131313131313131
+3DEFFFCF3040728A3F3173F1E13172FFFF7E30CFFFD0312FFFF0723D1E699B691E3D31313131
+3131313131313131EDFF9E31313131313131EFFF3FACFFED3D31DFFFFFFFFFF1E4316DB8B89B
+B8B5713F3131313131313131313131F0FFAC313163733D31319EFFC3E5FFAC3131CFFFE13131
+DAFFC4C26F00000085E25F3131313131313131313131C7FFEF7292F0F1DF30317EFFE2FFED62
+3131E5FFBC3131DAFFFF550000000003A77C4D3131313131313131313130CCF1FFFFFFE43131
+3140F1FFFFB4313131E1FFFFFFFFFFFFB70000000B000066CB1A313131313131313131313130
+72AC9E9E31313131318A9292633131317E9E9392AC91909A000B8DA8870017C56E6131313131
+3131313131313131313131313131313131312F31313131313131313133909B007A880B877B00
+C49B2831313131313131313131313131313131313131313131313131313131313131311DE30E
+000B88A98800179BE71D31313131313131313131403D3F3131313F3131313F3F3D3131313131
+313131311CE20B0000000E00178891E31C3131313131313131313B5C5856373737375C37375D
+566B3D31313131313131313599A900000000006690E28D373131313131313131316213000300
+0303030003030000163B31313131313131311AE2C53200000B0B8797B8E21C31313131313131
+3131621303030000000003000000001762313131313131313D6BB8B89003B8E7B888B5C5CB6D
+3B31313131313131316217000003000000000000000013623131313131313133B58890C5C57B
+0B7BE7C59AB5A9373131313131313131620A0000000003000003000000133B31313131313140
+11D1449BFFB76F007B9BD1887BE71A4031313131313131621600000000000000000000001363
+3131313131313B6FB80B7BCB900A000059B83270E76E3B313131313131316113030003000000
+03000003000E623131313131313997A1000BC5C50000009B9B0032D890373131313131313162
+16000300000003000000000313623131313131311EB85900009BD17B7B7BC55900009BB82831
+3131313131313B1300000000000000000000000E623131313131311AF190000BC5FF907B88FF
+900016CBEC1D313131313131316216000000030003000003000013623131313131314D4490B8
+B8B8A91700007B90A9CB88594D31313131313131621300000000000000030000001362313131
+3131406B9090B8B5B5880A000A889B91B890595D313131313131316216030300000000000000
+00001762313131313135A9A78F000091E2A90BB8A88D0000C5CB694D3131313131313B130003
+130003130003000300163B313131313133B89B59000A7BD0A90BB89B320B0087C5A935313131
+31313163336D565658584458585858566B3F3131313131630059D84485E29017900059E28817
+D155003F31313131313131403D313131313131313131403D31313131313133B5D167000388EE
+A917B8D1590B0088E7B533313131313131314031313131313131313131313131313131314019
+FF320000007B9BFF17FF3200000B7B9BFF1A3F31313131313131313131313131313131313131
+31313131313133A9D16F000B87FFA90BA9D16F0A0088E7A93731313131313131313131313131
+31313131313131313131313131630043E73288D08F17900B32D18817D855003D313131313131
+313131313131313131313131313131313131313133B5D166000387E7A90BB8D16E030088E7B5
+3731313131313131313131313131313131313131313131313131401AF1320000037B91FF17FF
+320000007B91FF192F3131313131313131313131313131313131313131313131313133A4D16E
+0A0B90FFB50BA9D16F0B0A87EE9B2B3131313131313131313131313131313131313131313131
+313131315F17E7176FFF7B00000022E2326FE7175F3131313131313131313131313131313131
+31313131313131313131314016D80332FFB6000003B8F10B82E70B4031313131313131313131
+3131313131313131313131313131313131313F16D10A6EE782C500C288D0178DE7163F313131
+313131313131313131313131313131313131313131313131314016E70059EC00A9B6A70BD10F
+88E71C4031313131313131313131313131313131313131313131313131313131311EB85970C4
+16447D3728B832A8B81E31313131313131313131313131313131313131313131313131313131
+31314D6DC5AB473D3139313B35ABE7694D313131313131313131313131313131313131313131
+3131313131313131313128B7B837313131313135C5A933313131313131313131313131313131
+313131313131313131313131313131313131355D313131313131315D35313131313131313131
+31313131313131313131313131313131313131313131313131313F313131313131313F3F3131
+31313131
+
+end
+%%PageTrailer
+%%Trailer
+%%EOF

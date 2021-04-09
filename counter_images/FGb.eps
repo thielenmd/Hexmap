@@ -1,0 +1,350 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: (ImageMagick)
+%%Title: (FGb.eps)
+%%CreationDate: (2018-07-28T23:59:34+00:00)
+%%BoundingBox: -0 -0 45 45
+%%HiResBoundingBox: 0 0 45 45
+%%DocumentData: Clean7Bit
+%%LanguageLevel: 1
+%%Pages: 1
+%%EndComments
+
+%%BeginDefaults
+%%EndDefaults
+
+%%BeginProlog
+%
+% Display a color image.  The image is displayed in color on
+% Postscript viewers or printers that support color, otherwise
+% it is displayed as grayscale.
+%
+/DirectClassPacket
+{
+  %
+  % Get a DirectClass packet.
+  %
+  % Parameters:
+  %   red.
+  %   green.
+  %   blue.
+  %   length: number of pixels minus one of this color (optional).
+  %
+  currentfile color_packet readhexstring pop pop
+  compression 0 eq
+  {
+    /number_pixels 3 def
+  }
+  {
+    currentfile byte readhexstring pop 0 get
+    /number_pixels exch 1 add 3 mul def
+  } ifelse
+  0 3 number_pixels 1 sub
+  {
+    pixels exch color_packet putinterval
+  } for
+  pixels 0 number_pixels getinterval
+} bind def
+
+/DirectClassImage
+{
+  %
+  % Display a DirectClass image.
+  %
+  systemdict /colorimage known
+  {
+    columns rows 8
+    [
+      columns 0 0
+      rows neg 0 rows
+    ]
+    { DirectClassPacket } false 3 colorimage
+  }
+  {
+    %
+    % No colorimage operator;  convert to grayscale.
+    %
+    columns rows 8
+    [
+      columns 0 0
+      rows neg 0 rows
+    ]
+    { GrayDirectClassPacket } image
+  } ifelse
+} bind def
+
+/GrayDirectClassPacket
+{
+  %
+  % Get a DirectClass packet;  convert to grayscale.
+  %
+  % Parameters:
+  %   red
+  %   green
+  %   blue
+  %   length: number of pixels minus one of this color (optional).
+  %
+  currentfile color_packet readhexstring pop pop
+  color_packet 0 get 0.299 mul
+  color_packet 1 get 0.587 mul add
+  color_packet 2 get 0.114 mul add
+  cvi
+  /gray_packet exch def
+  compression 0 eq
+  {
+    /number_pixels 1 def
+  }
+  {
+    currentfile byte readhexstring pop 0 get
+    /number_pixels exch 1 add def
+  } ifelse
+  0 1 number_pixels 1 sub
+  {
+    pixels exch gray_packet put
+  } for
+  pixels 0 number_pixels getinterval
+} bind def
+
+/GrayPseudoClassPacket
+{
+  %
+  % Get a PseudoClass packet;  convert to grayscale.
+  %
+  % Parameters:
+  %   index: index into the colormap.
+  %   length: number of pixels minus one of this color (optional).
+  %
+  currentfile byte readhexstring pop 0 get
+  /offset exch 3 mul def
+  /color_packet colormap offset 3 getinterval def
+  color_packet 0 get 0.299 mul
+  color_packet 1 get 0.587 mul add
+  color_packet 2 get 0.114 mul add
+  cvi
+  /gray_packet exch def
+  compression 0 eq
+  {
+    /number_pixels 1 def
+  }
+  {
+    currentfile byte readhexstring pop 0 get
+    /number_pixels exch 1 add def
+  } ifelse
+  0 1 number_pixels 1 sub
+  {
+    pixels exch gray_packet put
+  } for
+  pixels 0 number_pixels getinterval
+} bind def
+
+/PseudoClassPacket
+{
+  %
+  % Get a PseudoClass packet.
+  %
+  % Parameters:
+  %   index: index into the colormap.
+  %   length: number of pixels minus one of this color (optional).
+  %
+  currentfile byte readhexstring pop 0 get
+  /offset exch 3 mul def
+  /color_packet colormap offset 3 getinterval def
+  compression 0 eq
+  {
+    /number_pixels 3 def
+  }
+  {
+    currentfile byte readhexstring pop 0 get
+    /number_pixels exch 1 add 3 mul def
+  } ifelse
+  0 3 number_pixels 1 sub
+  {
+    pixels exch color_packet putinterval
+  } for
+  pixels 0 number_pixels getinterval
+} bind def
+
+/PseudoClassImage
+{
+  %
+  % Display a PseudoClass image.
+  %
+  % Parameters:
+  %   class: 0-PseudoClass or 1-Grayscale.
+  %
+  currentfile buffer readline pop
+  token pop /class exch def pop
+  class 0 gt
+  {
+    currentfile buffer readline pop
+    token pop /depth exch def pop
+    /grays columns 8 add depth sub depth mul 8 idiv string def
+    columns rows depth
+    [
+      columns 0 0
+      rows neg 0 rows
+    ]
+    { currentfile grays readhexstring pop } image
+  }
+  {
+    %
+    % Parameters:
+    %   colors: number of colors in the colormap.
+    %   colormap: red, green, blue color packets.
+    %
+    currentfile buffer readline pop
+    token pop /colors exch def pop
+    /colors colors 3 mul def
+    /colormap colors string def
+    currentfile colormap readhexstring pop pop
+    systemdict /colorimage known
+    {
+      columns rows 8
+      [
+        columns 0 0
+        rows neg 0 rows
+      ]
+      { PseudoClassPacket } false 3 colorimage
+    }
+    {
+      %
+      % No colorimage operator;  convert to grayscale.
+      %
+      columns rows 8
+      [
+        columns 0 0
+        rows neg 0 rows
+      ]
+      { GrayPseudoClassPacket } image
+    } ifelse
+  } ifelse
+} bind def
+
+/DisplayImage
+{
+  %
+  % Display a DirectClass or PseudoClass image.
+  %
+  % Parameters:
+  %   x & y translation.
+  %   x & y scale.
+  %   label pointsize.
+  %   image label.
+  %   image columns & rows.
+  %   class: 0-DirectClass or 1-PseudoClass.
+  %   compression: 0-none or 1-RunlengthEncoded.
+  %   hex color packets.
+  %
+  gsave
+  /buffer 512 string def
+  /byte 1 string def
+  /color_packet 3 string def
+  /pixels 768 string def
+
+  currentfile buffer readline pop
+  token pop /x exch def
+  token pop /y exch def pop
+  x y translate
+  currentfile buffer readline pop
+  token pop /x exch def
+  token pop /y exch def pop
+  currentfile buffer readline pop
+  token pop /pointsize exch def pop
+  x y scale
+  currentfile buffer readline pop
+  token pop /columns exch def
+  token pop /rows exch def pop
+  currentfile buffer readline pop
+  token pop /class exch def pop
+  currentfile buffer readline pop
+  token pop /compression exch def pop
+  class 0 gt { PseudoClassImage } { DirectClassImage } ifelse
+  grestore
+} bind def
+%%EndProlog
+%%Page:  1 1
+%%PageBoundingBox: 0 0 45 45
+userdict begin
+DisplayImage
+0 0
+45 45
+12
+45 45
+1
+0
+0
+16
+FFFFFF
+DEDEDE
+ADADFF
+949CE7
+949CB5
+848C84
+6B6BEF
+6B638C
+6363D6
+5A63F7
+424263
+423939
+39399C
+181829
+000021
+000000
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060E0F0D0F0F0D0606080A0F0F0F0B
+070606060606060606060606060606060606060606060606060606060606060E0F0F0E0D0D06
+060E0F0D0F0F0F0E060606060606060606060606060606060606060606060606060606060606
+0E0F0C080808060D0F0D0606070E060606060606060606060606060606060606060606060606
+060606060606060E0F0F0F0F06060E0F0C060606060606060606060606060606060606060606
+06060606060606060606060606060F0F0B0C0C06060E0F0C060F0F0F0F0A0606060606060606
+0606060606060606060606060606060606060606060F0F0A060606060B0F0D0806060F0F0A06
+060606060606060606060606060606060606060606060606060606060F0F0C06060606080F0F
+0F0D0E0F0E0606060606060606060606060606060606060606060606060606060606060D0E0C
+0606060606080D0F0E0E0C080606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060101010101010101010101010101060606060606
+0606060606060606060606060606060606060606060606060601000000000000000000000000
+0106060606060606060606060606060606060606060606060606060606060606010000000000
+0000000000000001060606060606060606060606060606060606060606060606060606060606
+0601000000000000000000000000010606060606060606060606060606060606060606060606
+0606060606060606010000000000000000000000000106060606060606060606060301010103
+0606060606060606060606060606060100000000000000000000000001060606060606060606
+0602040D0D0D0203060606060606060606060606060601000000000000000000000000010606
+060606060606060107050000010A040306060606060606060606060606010000000000000000
+0000000001060606060606060603040B00000000070A01060606060606060606060606060100
+0000000000000000000000010606060606060606020A0400000000010D040306060606060606
+060606060601000000000000000000000000010606060606060608020D0504040404050D0501
+06060606060606060606060601000000000000000000000000010606060606060606040A0404
+04040404070D0106060606060606060606060601000000000000000000000000010606060606
+0606030404000000000000050D04030606060606060606060606010000000000000000000000
+000106060606060606020501000000000001050B050106060606060606060606060101010101
+010101010101010101060606060606060205010B010B010B070B0B0501060606060606060606
+06060606060606060606060606060606060606060606060205010D010D010B070A0B05010606
+0606060606060606060606060606060606060606060606060606060606060105010000000000
+01050B0502060606060606060606060606060606060606060606060606060606060606060601
+0401000000000004050D05020606060606060606060606060606060606060606060606060606
+060606060606080405000000000004050D010806060606060606060606060606060606060606
+0606060606060606060606060606020D0707070707070B0B0106060606060606060606060606
+060606060606060606060606060606060606060606020B0400000004050D0403060606060606
+0606060606060606060606060606060606060606060606060606060603040B000001050A0B01
+060606060606060606060606060606060606060606060606060606060606060606060606010A
+0A0405050B040306060606060606060606060606060606060606060606060606060606060606
+06060606060601070D0B0D040206060606060606060606060606060606060606060606060606
+0606060606060606060606060608010505050306060606060606060606060606060606060606
+0606060606060606060606060606060606060606060802010206060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606060606060606060606060606060606060606060606060606060606060606060606
+0606060606090606060606
+
+end
+%%PageTrailer
+%%Trailer
+%%EOF
