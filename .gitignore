@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Map image files
+*.svg
+*.png
+*.eps
+*.pdf
+
 # User-specific files
 *.rsuser
 *.suo
