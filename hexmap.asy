@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 //                                                                              //
 // *************************************                                        //
-// *** Hex Map Generator Version 5.5 ***                                        //
+// *** Hex Map Generator ***			                                        //
 // *************************************                                        //
-// Copyright � 2018 by Harald Katzer & Mike Thielen                             //
+// Copyright (c) 2018-2021 by Harald Katzer & Mike Thielen                      //
 // All rights reserved.                                                         //
 //                                                                              //
 // Permission is hereby granted, free of charge, to any person                  //
