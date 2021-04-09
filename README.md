@@ -16,20 +16,20 @@ asy -f png hexmap.asy
 ```
 
 ## Compiling to SVG
-Creating an SVG file from an EPS input requires *dvisvgm* and *gs* (a ghostscript tool typically included in Asymptote or LaTeX distributions). It is necessary to first locate the path to *gs* using the the command below.
+Creating an SVG file from an EPS input requires **dvisvgm** and **gs** (a ghostscript tool typically included in Asymptote or LaTeX distributions). It is necessary to first locate the path to *gs* using the the command below.
 
 ```
 which gs
 ```
 
-The EPS output from *Asymptote* may then be converted to SVG using the command below.
+The EPS output from **Asymptote** may then be converted to SVG using the command below.
 
 ```
 dvisvgm -E --libgs=/path/to/gs hexmap.eps
 ```
 
 ## Compiling to PDF
-Creating a PDF version of the map requires LaTeX and the *xelatex* compiler. The command for generating PDF output is below.
+Creating a PDF version of the map requires **LaTeX** and the **xelatex** compiler. The command for generating PDF output is below.
 
 ```
 asy hexmap.asy -tex xelatex
