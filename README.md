@@ -28,7 +28,7 @@ The EPS output from **Asymptote** may then be converted to SVG using the command
 dvisvgm -E --libgs=/path/to/gs hexmap.eps
 ```
 
-**NOTE**: that the output of bakcground images (if enabled) for SVG output will only be grayscale.
+**NOTE**: The output of bakcground images (if enabled) for SVG output will only be grayscale.
 
 ## Compiling to PDF
 Creating a PDF version of the map requires **LaTeX** and the **xelatex** compiler. The command for generating PDF output is below.
