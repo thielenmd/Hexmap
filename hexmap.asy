@@ -27,14 +27,13 @@
 //                                                                              //
 //////////////////////////////////////////////////////////////////////////////////
 
-// package settings for Starfire counter font
-// limited to PDF output only. If EPS/SVG desired, comment out the lines
-// beginning with "usepackage" and do not use Starfire font
-// use command: asy <filename> -tex xelatex
-
-//usepackage("fontspec");
-//usepackage("xunicode");
-//usepackage("xltxtra");
+// package settings for Starfire package font and PDF output
+// IMPORTANT: Leave these lines commented out unless you want PDF output
+// and are using xelatex, and are using the Starfire counter font, otherwise
+// Asymptote will hang up
+// usepackage("fontspec");
+// usepackage("xunicode");
+// usepackage("xltxtra");
 
 // basic settings
 unitsize(1cm, 1cm);
@@ -71,8 +70,8 @@ pen pen_LabelText = font("T1", "phv", "m", "n");
 pen pen_LargeText = font("T1", "phv", "b", "n");
 
 // background image file
-bool bool_BackgroundImage = false;
-string string_imagefile = "somespace.eps";
+bool bool_BackgroundImage = true;
+string string_imagefile = "background_images/starfield.eps";
 
 // define hex geometry
 real real_HexRadiusS2S = 1;
@@ -208,17 +207,17 @@ void drawScattergramLabels(int x, int y)
 	}
 
 // placing counter via font (see package settings!)
-//void placeCounterFont(int x, int y, string string_CounterType, int i_CounterNumber, pen pen_CounterColor, pen pen_CounterFillColor, int i_facing)
-//	{
-//	texpreamble("\setmainfont{StarfireCounters}");
-//	path path_CounterFill = box((-0.55,-0.55), (0.55,0.5));
-//	filldraw(shift(pair_getPos(x-1,y-1))*rotate(-60*(i_facing-1))*path_CounterFill, pen_CounterFillColor);
-//	Label L_Counter = Label(scale(3)*rotate(-60*(i_facing-1))*string_CounterType, pair_getPos(x-1,y-1), pen_CounterColor);
-//	label(L_Counter);
+void placeCounterFont(int x, int y, string string_CounterType, int i_CounterNumber, pen pen_CounterColor, pen pen_CounterFillColor, int i_facing)
+	{
+	texpreamble("\setmainfont{StarfireCounters}");
+	path path_CounterFill = box((-0.55,-0.55), (0.55,0.5));
+	filldraw(shift(pair_getPos(x-1,y-1))*rotate(-60*(i_facing-1))*path_CounterFill, pen_CounterFillColor);
+	Label L_Counter = Label(scale(3)*rotate(-60*(i_facing-1))*string_CounterType, pair_getPos(x-1,y-1), pen_CounterColor);
+	label(L_Counter);
 	// TODO add Numbering of the counters
-	//Label L_CounterNumber = Label((string) i_CounterNumber, (0.55,0.5), SW, pen_CounterColor);
-	//label(rotate(-60*(i_facing-1), (0,0))*L_CounterNumber);
-//	}
+	Label L_CounterNumber = Label((string) i_CounterNumber, (0.55,0.5), SW, pen_CounterColor);
+	label(rotate(-60*(i_facing-1), (0,0))*L_CounterNumber);
+	}
 
 // placing counter via image
 void placeCounterImage(int x, int y, string string_CounterType, int i_CounterNumber, int i_facing)
@@ -277,7 +276,7 @@ if(bool_SystemHex == true)
 	drawRadianLabels(int_SystemHexPosX - 1, int_SystemHexPosY - 1);
 	}
 
-// draw counters via font
+// draw counters via font example
 //layer();
 //placeCounterFont(42, 32, "X", 1, cyan, red, 1);
 //placeCounterFont(42, 33, "A", 2, cyan, blue, 2);
@@ -286,35 +285,16 @@ if(bool_SystemHex == true)
 //placeCounterFont(42, 36, "D", 5, cyan, red, 5);
 //placeCounterFont(42, 37, "E", 6, cyan, blue, 6);
 
-// draw counters via imagefile
-layer();
-placeCounterImage(1, 1, "BBb", 1, 1);
-placeCounterImage(1, 2, "BBr", 1, 2);
-placeCounterImage(1, 3, "BCb", 1, 3);
-placeCounterImage(1, 4, "BCr", 1, 4);
-placeCounterImage(1, 5, "DNb", 1, 5);
-placeCounterImage(1, 6, "DNr", 1, 6);
+// draw counters via imagefile example
+// layer();
+// placeCounterImage(1, 1, "BBb", 1, 1);
+// placeCounterImage(1, 2, "BBr", 1, 2);
+// placeCounterImage(1, 3, "BCb", 1, 3);
+// placeCounterImage(1, 4, "BCr", 1, 4);
+// placeCounterImage(1, 5, "DNb", 1, 5);
+// placeCounterImage(1, 6, "DNr", 1, 6);
 
 // print real mapsize, steppings and hex geometry
 write("Mapsize: " + (string)(int_MapsizeX * real_stepX + 1.5) + "x" + (string)(int_MapsizeY * real_stepY + 2.5) + "cm");
 write("StepsizeX: " + (string) real_stepX + "cm, " + "StepsizeY: " + (string) real_stepY + "cm");
 write("HexRadiusP2P: " + (string) real_HexRadiusP2P + ", HexRadiusS2S: " + (string) real_HexRadiusS2S + "cm, " + "Hexside: " + (string) real_Hexside + "cm");
-
-// draw some stuff for debugging
-//draw(unitcircle);
-//draw(shift(pair_getPos(int_MapsizeX - 1,int_MapsizeY - 1))*unitcircle);
-
-// test pair_getRelPos() function
-//label("0",pair_getRelPos((0,0),0,1), red + linewidth(1.0pt));
-//label("1",pair_getRelPos((0,0),1,1), red + linewidth(1.0pt));
-//label("2",pair_getRelPos((0,0),2,1), red + linewidth(1.0pt));
-//label("3",pair_getRelPos((0,0),3,1), red + linewidth(1.0pt));
-//label("4",pair_getRelPos((0,0),4,1), red + linewidth(1.0pt));
-//label("5",pair_getRelPos((0,0),5,1), red + linewidth(1.0pt));
-//label("6",pair_getRelPos((0,0),6,1), red + linewidth(1.0pt));
-//label("7",pair_getRelPos((0,0),7,1), red + linewidth(1.0pt));
-//label("8",pair_getRelPos((0,0),8,1), red + linewidth(1.0pt));
-//label("9",pair_getRelPos((0,0),9,1), red + linewidth(1.0pt));
-//label("10",pair_getRelPos((0,0),10,1), red + linewidth(1.0pt));
-//label("11",pair_getRelPos((0,0),11,1), red + linewidth(1.0pt));
-//label("12",pair_getRelPos((0,0),12,1), red + linewidth(1.0pt));
