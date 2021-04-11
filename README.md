@@ -2,7 +2,7 @@
 Hex mapping tool using **Asymptote** and **LaTeX** for space-based wargames. Designed for *Starfire* (all versions), but it may be used for any space-based wargame with adaptations.
 
 # Information and Compiling
-This tool uses [Asymptote](https://asymptote.sourceforge.io/) as well as **LaTeX**. The source file is parameterized to allow for different options (foreground color, background color, etc.). By default, Asymptote will compile the map to an EPS (encapsulated postscript file), however other output options are available. The command to cpopile the map is below (ensure that Asymptote is on your command line search path).
+This tool uses [Asymptote](https://asymptote.sourceforge.io/) as well as **LaTeX**. The source file is parameterized to allow for different options (foreground color, background color, etc.). By default, Asymptote will compile the map to an EPS (encapsulated postscript) file, however other output options are available. The command to compile the map is below (ensure that Asymptote is on your command line search path).
 
 ```
 asy hexmap.asy
