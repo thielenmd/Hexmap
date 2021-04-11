@@ -47,16 +47,12 @@ The script can (or is planed to) use additional resources created by other peopl
 
 - The Starfire counter font created by William Hostman (aka **Aramis**).
         http://aramis.hostman.us/fonts/
-
 - The counter images taken from the Starfire VASSAL module.
         http://www.vassalengine.org/wiki/Module:Starfire
-
 - The Classic Starfire countersheets created by Chase Murphy (aka **Godsgopher**).
         http://www.starfiredesign.com/forum/download/file.php?id=62
-
 - Mike Fisher's 'All the Ships' counter and the M8 Map System.
         http://www.cke1st.com/m_games4.htm
-
 These works are the intellectual property of their respective authors.
 
 # Future Enhancements
